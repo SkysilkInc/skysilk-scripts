@@ -29,5 +29,7 @@ systemctl reload apache2
 # Using Certbot to get an SSL certificate
 certbot --apache -d $DOMAIN
 
-echo "SSL certificate configured and Apache restarted. Go to WordPress admin panel to change URLs to HTTPS."
+echo "SSL certificate configured, Apache restarted. Now open the WordPress admin panel in your favorite browser and check out the new SSL certificate."
 
+# Adding a cron job for certificate renewal
+(crontab -l ; echo "0 0 1 * * /usr/bin/certbot renew --quiet --no-self-upgrade && systemctl reload apache2") | crontab -
